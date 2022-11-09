@@ -6,10 +6,11 @@ rescue_from ActiveRecord::RecordInvalid, :with => :unprocessable_entity_response
 private
 
 def record_not_found_response(exception)
-render json: "#{exception.model} not found" , status: :not_found
+render json: {error: "#{exception.model} not found"}, status: :not_found
 end
 
 
+#####UPDATE#### needed error / errors keys
 #I do not understand why what I'm doing results in the wrong quote character
 #  1) Activities DELETE /activities/:id with an invalid ID returns an error message
 # Failure/Error:
@@ -22,7 +23,7 @@ end
   
   
   def unprocessable_entity_response(exception)
-  render json: "#{exception.errors.full_messages}" , status: :invalid
+  render json: {errors: "#{exception.errors.full_messages}"} , status: :invalid
   end
   
 
